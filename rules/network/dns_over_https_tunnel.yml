@@ -1,0 +1,36 @@
+title: Suspicious DNS Query to Public DoH Resolver
+id: 4d0b8f1a-9c62-4e37-a1d5-6b3e2f9c0871
+status: experimental
+description: |
+  Detects endpoint DNS lookups for well-known public DNS-over-HTTPS (DoH)
+  resolver hostnames. Malware uses DoH to tunnel command-and-control and
+  exfiltration over TLS, bypassing DNS-based inspection. In a managed estate,
+  endpoints should resolve through the corporate resolver, so direct lookups
+  of public DoH providers are worth surfacing.
+references:
+  - https://attack.mitre.org/techniques/T1071/004/
+  - https://github.com/curl/curl/wiki/DNS-over-HTTPS
+author: Vandit Shah (BLUE-FORGE)
+date: 2026-07-12
+tags:
+  - attack.command-and-control
+  - attack.exfiltration
+  - attack.t1071.004
+logsource:
+  category: dns_query
+  product: windows
+detection:
+  selection:
+    QueryName|contains:
+      - 'dns.google'
+      - 'cloudflare-dns.com'
+      - 'mozilla.cloudflare-dns.com'
+      - 'doh.opendns.com'
+      - 'dns.quad9.net'
+      - 'doh.cleanbrowsing.org'
+      - 'dns.adguard.com'
+  condition: selection
+falsepositives:
+  - Browsers (Firefox, Chrome, Edge) with built-in DoH enabled. Baseline which
+    applications legitimately use DoH before alerting in production.
+level: medium

@@ -1,0 +1,36 @@
+title: LSASS Credential Dump via LOLBin
+id: b8c4f0d2-7a91-4e6b-8c3a-5d2e1f7b0a63
+status: experimental
+description: |
+  Detects credential-dumping attempts against LSASS using living-off-the-land
+  binaries such as comsvcs.dll (MiniDump), rundll32, procdump, or a direct
+  reference to lsass in the command line. Access to LSASS memory is a high-signal
+  precursor to lateral movement.
+references:
+  - https://attack.mitre.org/techniques/T1003/001/
+  - https://lolbas-project.github.io/lolbas/Libraries/comsvcs/
+author: Vandit Shah (BLUE-FORGE)
+date: 2026-07-12
+tags:
+  - attack.credential-access
+  - attack.t1003.001
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_comsvcs:
+    CommandLine|contains|all:
+      - 'comsvcs'
+      - 'MiniDump'
+  selection_procdump:
+    Image|endswith: '\procdump.exe'
+    CommandLine|contains: 'lsass'
+  selection_lsass_cli:
+    CommandLine|contains:
+      - 'lsass.exe'
+      - 'lsass.dmp'
+  condition: selection_comsvcs or selection_procdump or selection_lsass_cli
+falsepositives:
+  - Legitimate crash-dump collection by monitoring/EDR agents. Confirm the
+    signer and parent process of the dumping tool.
+level: critical
