@@ -120,6 +120,16 @@ tooling used in production detection-engineering programs:
 
 ---
 
+## The lab behind these detections
+
+These rules aren't written in the abstract — they're validated against a live
+detection-engineering lab (**BLUE-FORGE**): a Windows Active Directory estate
+with Sysmon telemetry, attacked from Kali with Atomic Red Team / Caldera, shipping
+logs to both Microsoft Sentinel and Splunk. The full architecture, data flow, and
+build phases are documented in [`docs/LAB_BLUEPRINT.md`](docs/LAB_BLUEPRINT.md),
+with a step-by-step [build log](docs/lab/BUILD_LOG.md) and a
+[learning log](docs/lab/LEARNING_LOG.md) explaining the concepts behind each step.
+
 ## Roadmap
 
 - [ ] Expand coverage across the ATT&CK matrix (lateral movement, exfiltration)
