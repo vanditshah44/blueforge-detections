@@ -65,9 +65,8 @@ table, so that mapping is handled explicitly rather than forced. A rule that
 | Registry Run Key Persistence | [T1547.001](https://attack.mitre.org/techniques/T1547/001/) | Persistence | medium | registry_set |
 | Suspicious DNS Query to Public DoH Resolver | [T1071.004](https://attack.mitre.org/techniques/T1071/004/) | Command & Control | medium | dns_query |
 
-ATT&CK coverage is tracked in [`docs/ATTACK_COVERAGE.md`](docs/ATTACK_COVERAGE.md).
-The detection engineering workflow (hypothesis → rule → validate → tune →
-deploy) is documented in [`docs/DETECTION_LIFECYCLE.md`](docs/DETECTION_LIFECYCLE.md).
+Every rule is tagged with its MITRE ATT&CK technique and follows the same
+engineering workflow: hypothesis → rule → validate → tune → deploy.
 
 ---
 
@@ -99,7 +98,6 @@ blueforge-detections/
 │   └── network/
 ├── tools/convert.py             # batch Sigma -> SPL + KQL (pySigma)
 ├── tests/test_rules.py          # metadata & policy tests
-├── docs/                        # detection lifecycle, ATT&CK coverage
 ├── .github/workflows/ci.yml     # lint + test + compile on every PR
 ├── Makefile                     # install / lint / test / convert
 └── requirements.txt
@@ -124,10 +122,8 @@ tooling used in production detection-engineering programs:
 These rules aren't written in the abstract — they're validated against a live
 detection-engineering lab (**BLUE-FORGE**): a Windows Active Directory estate
 with Sysmon telemetry, attacked from Kali with Atomic Red Team / Caldera, shipping
-logs to both Microsoft Sentinel and Splunk. The full architecture, data flow, and
-build phases are documented in [`docs/LAB_BLUEPRINT.md`](docs/LAB_BLUEPRINT.md),
-with a step-by-step [build log](docs/lab/BUILD_LOG.md) and a
-[learning log](docs/lab/LEARNING_LOG.md) explaining the concepts behind each step.
+logs to both Microsoft Sentinel and Splunk. Rules are fired against the emulated
+attack, confirmed, and tuned before they're considered done.
 
 ## Roadmap
 

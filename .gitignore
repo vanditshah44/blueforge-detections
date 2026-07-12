@@ -8,3 +8,6 @@ __pycache__/
 venv/
 .pytest_cache/
 *.egg-info/
+
+# Private lab docs — kept locally, never published
+docs/
