@@ -16,10 +16,9 @@ lab emulates adversary techniques against a Windows + Sysmon estate; the
 detections that catch them live here, treated like software: reviewed in pull
 requests, tested in CI, and deployed to two SIEMs from a single source of truth.
 
-**Why this exists:** I don't just monitor a SIEM — I *build* the detections,
-automate their validation, and ship them as code. That is the difference between
-a SOC analyst who clicks through alerts and a detection engineer who owns the
-pipeline.
+**Why this exists:** detection engineering means owning the full pipeline — I
+*build* the detections, automate their validation, and ship them as code, so the
+logic is reviewed, tested, and deployed like any other software.
 
 ---
 
